@@ -1,0 +1,83 @@
+.login {
+  margin:10% auto;
+  max-width:560px;
+  header{
+    .header-icon {
+      display: inline-block;
+      margin-left: 10%;
+    }
+    img{    
+      vertical-align:middle;
+    }
+    span.title {
+      margin-left:20px;
+      font-size:20px;
+      letter-spacing:2px;
+    }
+    .el-dropdown{
+      position: fixed;
+      right:50px;
+    }
+    span.website-banner-name {
+      font-size: 20px;
+      font-weight: 500;
+      display: inline-block;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .login{
+
+      position:absolute;
+      right:200px;
+    }
+    width:100%;
+    height:100px;
+    background:#fff;
+    z-index:11;
+    line-height:100px;
+    padding:5px;
+    position:fixed;
+    top:0px;
+    left:0px;
+    box-shadow: 0px 5px 5px #eee; 
+  }
+  .box{
+    border:1px solid #e6e6e6;
+    padding:5%;
+    p {
+      text-align:center;
+    }
+    .el-form-item p {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  .el-button--primary{
+    width:100%;
+    background:orange;
+    border:1px solid orange;
+  }
+  .unclick{
+    pointer-events:none;
+  }
+  .getCode{
+    padding:0px 6px;
+    background:#eee;
+    color:#333;
+    position:absolute;
+    right:0px;
+    border-top-right-radius:3px;
+    border-bottom-right-radius:3px;
+    top:0px;
+    cursor: pointer;
+  }
+  
+}
+
+@media screen and (max-width : 766px){
+  .login header {
+    .header-icon {
+      margin-left: 0px;
+    }
+  }
+}

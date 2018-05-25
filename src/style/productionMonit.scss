@@ -1,0 +1,59 @@
+$center:center;
+$color:#333;
+.pm{
+
+  display:flex;
+  flex-wrap:wrap;
+  .text {
+    font-size: 14px;
+  }
+  
+  .item {
+    padding: 18px 0;
+    text-align:$center;
+  }
+  .box-card {
+    color:#717171;
+    width: 350px;
+    margin:0 10px;
+    div.el-card__body{
+      padding:10px!important;
+      text-align:$center;
+      a{
+        text-decoration:none;
+      }
+      .uuid{
+        text-align:$center;
+        font-size:14px;
+        margin:8px 0px 20px 0px;
+        color:$color;
+      }
+      .stat{
+        text-align:right;
+        color:$color;
+        span{
+          width:20px;
+          height:20px;
+          border-radius:20px;
+          display:inline-block;
+          background:red;
+        }
+      }
+      .val{
+        text-align:center;
+        color:$color;
+      }
+      .pres{
+        text-align:$center;
+        font-size:12px;
+        color:$color;
+      }
+      p{
+        text-align:$center;
+        font-size:18px;
+        margin:2px;
+        color:$color;
+      }
+    }
+  }
+}

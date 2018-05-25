@@ -1,0 +1,35 @@
+.all{
+	.card-content{
+		width:100%;
+       display:flex;
+       flex-wrap: wrap;
+       justify-content:flex-start;
+      .box-card{
+        width:375px;
+        height:170px;
+        margin:1px;
+        text-align:center;
+        background:transparent;
+        .el-card__body{
+          p,div{
+           color:orange;
+          }
+          .el-progress-bar__inner{
+            background-color:green;
+            .el-progress__text{
+              color:orange;
+            }
+          }
+        }
+        border-color:rgba(225,225,225,0.7);
+        .el-icon-circle-plus{
+          color:orange;
+          font-size:50px;
+        }
+      }
+	}
+	select{
+		padding: 10px;
+    	border-radius: 5px;
+	}
+}

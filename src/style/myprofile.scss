@@ -1,0 +1,60 @@
+
+.profile{
+  .el-message-box__header{
+    text-align:center;
+  }
+  .content{
+    width:100%;
+    height:100vh;
+    background:#fff;
+    border:1px solid #eee;
+    margin:2% 0;
+
+    .tree{
+      width:20%;
+      min-width:270px;
+      padding:30px;
+      height:100vh;
+      vertical-align:top;
+      display:inline-block;
+      border-right:1px solid #eee;
+      ul {
+        li{
+          height:40px;
+          line-height:40px;
+          font-size:14px;
+          cursor:pointer;
+          list-style-type:none;
+          
+          .row{
+            width:70%;
+            display:inline-block;
+            &:hover{
+              color:#409EFF;
+            }
+          }
+          .el-button.el-button--primary{
+            padding:3px 5px;
+            background:#fff;
+            color:#333;
+            border-color:#eee;
+          }
+          i{
+            font-size:20px;
+            margin:0 4px;
+          }
+        }
+      }
+    }
+    .detail{
+      
+     
+      min-width: 640px;
+      display:inline-block;
+      .framecontent{
+        width:100%;
+        height:100vh;
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+.el-main .zaochen{
+	display: none!important;
+}
+.userinfo{
+	max-width: 800px;
+	min-width:600px;
+}
+.update-info,.update-code{ 
+	.el-input{
+		width: 90%;
+	}
+}
+.info-box{
+	margin-bottom: 20px;
+	position: relative;
+	.getCode{
+		position: absolute;
+		right: 12.3%;
+		top: 10px;
+		color: #409eff;
+		cursor: pointer;
+		font-size:14px;
+	}
+	.input-second{
+		position: absolute;
+		right: 12.3%;
+		top: 10px;
+		color: #409eff;
+		font-size:14px;
+	}
+}
+.update-info,.update-code{
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+.update-info-button{
+	.el-button{
+		margin-left: 310px;
+		margin-top:20px;
+	}
+}

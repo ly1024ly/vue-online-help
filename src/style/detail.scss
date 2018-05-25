@@ -1,0 +1,115 @@
+
+  .detail{
+    margin:0px;
+    width: 100%;
+    .tool{
+      width:100%;
+      height:60px;
+      line-height:60px;
+      padding:0px 15px;
+      color:#409EFF;
+      font-size:14px;
+      background:#dcdfe6;
+
+      .el-input{
+        width:75%;
+      }
+      .el-input__inner{
+          width:16%;
+      }
+      .el-form-item{
+        margin-top: 10px;
+        &.machine-select{
+          width: 265px;
+        }
+ 
+        &.line-num{
+          width: 200px;
+        }
+      }
+
+      .el-icon-arrow-down.el-icon--right{
+        display:none;
+      }
+    }
+    .zaochen{
+      width:-webkit-calc(100% - 60px);
+      width:-moz-calc(100% - 60px);
+      width: -ms-calc(100% - 60px);
+      width: calc(100% - 60px);
+      padding:30px;
+      height:100vh;
+      background:rgba(225,225,225,0.9);
+      position:fixed;
+      top:0px;
+      left:0px;
+      z-index:12;
+      text-align:right;
+      .el-icon-circle-close-outline{
+        font-size:40px;
+      }
+    }
+    .detail-tool-col{
+      padding: 20px 100px;
+    }
+    .el-button.el-button--primary{
+      background:orange;
+      border:none;
+    }
+    .el-dialog__body select{
+      padding:10px;
+      border-radius:5px;
+    }
+    .el-dialog__body select option{
+      padding:4px;
+      border-bottom:1px solid #eee;
+    }
+    .el-dropdown-link {
+      cursor: pointer;
+      color: #409EFF;
+    }
+    .el-icon-arrow-down {
+      font-size: 12px;
+    }
+    .card-content{
+      width:100%;
+      display:flex;
+      flex-wrap: wrap;
+      justify-content:center;
+      .card-content-wrap{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+      .box-card{
+        width:375px;
+        height:170px;
+        margin:1px;
+        text-align:center;
+        background:transparent;
+        .el-card__body{
+          p,div{
+           color:orange;
+          }
+          .el-progress-bar__inner{
+            background-color:green;
+            .el-progress__text{
+              color:orange;
+            }
+          }
+        }
+        border-color:rgba(225,225,225,0.7);
+        .el-icon-circle-plus{
+          color:orange;
+          font-size:50px;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width :747px ){
+    .line-num {
+      display: none;
+    }
+  }

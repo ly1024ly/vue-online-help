@@ -1,0 +1,31 @@
+.all-content{
+	position: relative;
+	.card-content{
+		display: flex;
+	    flex-wrap: wrap;
+	    .card-plus{
+	    	color: #717171;
+		    width: 375px;
+		    height: 170px;
+		    margin: 1px;
+		    text-align: center;
+		    vertical-align: middle;
+		    .el-icon-circle-plus{
+	          color:orange;
+	          font-size:50px;
+	          margin-top: 20px;
+	        }
+
+	    }
+
+	}
+	.deleteTemp{
+		font-size: 20px;
+		display: inline-block;
+		position: absolute;
+		right: -10px;
+		top: 0px;
+		color: orange;
+		cursor: pointer;
+	}
+}

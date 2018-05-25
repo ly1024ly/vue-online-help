@@ -1,0 +1,71 @@
+$inline:inline-block;
+header{
+	img{		
+		vertical-align:middle;
+	}
+	span.title {
+		margin-left:20px;
+		font-size:20px;
+		letter-spacing:2px;
+	}
+	.login{
+
+		position:absolute;
+		right:120px;
+	}
+	height:100px;
+	line-height:100px;
+	padding:5px 50px;
+	position:relative;
+	box-shadow: 0px 5px 5px #eee;	
+}
+section{
+	form{
+		width:47%;
+		padding:0 7% 0 0;
+		border-right:1px solid #e6e6e6;
+	}
+	.unclick{
+		pointer-events:none;
+	}
+	.getCode{
+		padding:0px 6px;
+		background:#eee;
+		color:#333;
+		position:absolute;
+		right:0px;
+		font-size:0.7rem;
+		border-top-right-radius:3px;
+		border-bottom-right-radius:3px;
+		top:0px;
+	}
+	.el-button--primary{
+		width:100%;
+		background-color:orange;
+		border-color:orange;
+		border-radius:none;
+	}
+	aside{
+		width:36%;
+		padding-left:50px;
+		display:$inline;
+		img{
+			width:60%;
+			margin:19%;
+		}
+		p{
+			text-align:center;
+		}
+	}
+	.el-form.demo-ruleForm {
+		display:$inline;
+		vertical-align:top;
+
+	}
+	.el-form-item {
+    	margin-bottom: 31px;
+	}
+	margin-top:50px;
+	padding:0 18%;
+}
+
