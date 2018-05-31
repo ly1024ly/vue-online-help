@@ -260,7 +260,7 @@ import axios from 'axios';
             { message: '请填写标签', trigger: 'change' }
           ],
           publishtype:[
-            {  message: '请选择发布方式', trigger: 'blur'}
+            { required: true, message: '请选择发布方式', trigger: 'blur'}
           ],
           Abstract:[{
             max:30, message: '摘要不可超过30个文字', trigger: 'blur'
@@ -395,48 +395,31 @@ import axios from 'axios';
       },
       aha(){
         let that = this;
-        let flag = function(resolve,reject){
-          if(that.radio7 == "download"){
-            that.ruleForm.url = "";
-            that.editorHtml = "";
-            resolve('success')
-          } else if(that.radio7 == "editor"){
-            that.ruleForm.url = "";
-            that.ruleForm.file = "";
-            resolve('success')
-          } else if(that.radio7 == "url"){
-            that.ruleForm.file = "";
-            let url = axios(
-            {
-              method:'get',
-              url:that.ruleForm.url,
-              headers:{"content-type":"text/html","Access-Control-Allow-Headers":"Origin, X-Requested-With, Content-Type, Accept"},
-            }
-            ).then(res => {
-              if(res.statusText == "OK"){
-                that.editorHtml = res.data
-                resolve("success")
-              } else {
-                reject("fail")
-              }
-            }).catch(err => {
-              console.log()
-            })
-          }
+        if(that.radio7 == "download"){
+          that.ruleForm.url = "";
+          that.editorHtml = "";
+          return true
+        } else if(that.radio7 == "editor"){
+          that.ruleForm.url = "";
+          that.ruleForm.file = "";
+          return true
+        } else if(that.radio7 == "url"){
+          that.ruleForm.file = "";
+          that.editorHtml = "";
+          return true
         }
-        return new Promise(flag)
       },
       submitForm(formName) {
         let that = this;
         let flag = false;
         //判断哪种方式上传文件的
-        let o = this.aha();
+        this.aha();
         let username = Cookies.get('username');
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            o.then(res => {
-              let obj = {
+            let obj = {
               ID:this.code.toString(),
+              id:Cookies.get('_id'),
               username:username,
               title:this.ruleForm.title,
               secrecy_type:this.ruleForm.type,
@@ -464,7 +447,7 @@ import axios from 'axios';
                 obj:obj
               }
               console.log(o)
-              api.saveFile(obj).then(res => {
+              api.editorFile(o).then(res => {
                 if(res.data.result == "success"){
                   console.log(this.ruleForm.file)
                   if(this.ruleForm.file!==""){
@@ -499,7 +482,7 @@ import axios from 'axios';
             //首次发布
               obj.status = "上线";
               console.log(obj)
-              api.saveFile(obj).then(res => {
+              api.editFile(obj).then(res => {
                 if(res.data.result == "success"){
                   console.log("fabui")
                   if(this.ruleForm.file!==""){
@@ -531,13 +514,11 @@ import axios from 'axios';
                 }
               })
             }
-            })
           } else {
-            return false
+            
+            return false;
           }
         });
-            
-          
           
       },
       handleChange(file, fileList) {

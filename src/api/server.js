@@ -316,7 +316,7 @@ export const getNumber = param => {
   return get(textUrl + "file/number")
 }
 
-export const editFile = param => {
+export const saveFile = param => {
   return post(textUrl + "file",param)
 }
 
@@ -351,3 +351,28 @@ export const changeFile = param => {
 export const uploadfile = (param,config) => {
   return post(textUrl+"file/upload_file",param,config)
 }
+
+export const editorFile = param => {
+  return post(textUrl + "file/editor_file",param)
+}
+
+export const searchFile = param => {
+  return get(`${textUrl}file/search_file?str=${param.str}&type=${param.type}`)
+}
+
+export const getStatus = param => {
+  return get(`${textUrl}file/getStatus?ID=${param.ID}`)
+}
+
+export const changeonline = param => {
+  return put(textUrl + "file/change_status",param)
+}
+
+export const checksharecode = param => {
+  return get(`${textUrl}file/search_by_sharecode?sharecode=${param.sharecode}`)
+}
+
+export const mypublish = param => {
+  return post(textUrl+"file/mypublish",param)
+}
+

@@ -8,8 +8,9 @@
       <div v-show="html==''?true:false">
         <p>您可以用以下信息的任意一种向他人分享资料：</p><div>手册号：{{bookcode}}</div><div>分享码：{{sharecode}}</div><div>分享链接：{{booklink}}</div><div>分享链接二维码：</div><p class="qrcode" style="text-align:center"><canvas id="canvas" ref="canvas"></canvas></p>
       </div>
-      <div class="" v-html="html">
+      <div class="" v-html="html" ref="load" v-show="filetype == 'html' ? true : false">
       </div>
+      <iframe :src="link" v-show="filetype == 'url'? true : false" id="myframe"></iframe>
       <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
@@ -17,16 +18,15 @@
     </el-dialog>
     <router-link to="file"><el-button type="primary" icon="el-icon-arrow-left">返回</el-button></router-link>
     <el-input placeholder="请输入内容" v-model="input5" class="input-with-select">
-      <el-select v-model="select" slot="prepend" placeholder="排序">
-        <el-option label="智能" value="1"></el-option>
-        <el-option label="品牌" value="2"></el-option>
-        <el-option label="产品" value="3"></el-option>
-        <el-option label="手册" value="4"></el-option>
-        <el-option label="手册号" value="5"></el-option>
-        <el-option label="上线时间" value="6"></el-option>
-
+      <el-select v-model="select" slot="prepend" placeholder="排序" @change="selectevt">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
       </el-select>
-      <el-button slot="append" icon="el-icon-search"></el-button>
+      <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
     </el-input>
     <div class="content">
       <el-table
@@ -96,6 +96,10 @@
 .input-with-select .el-input-group__prepend {
   background-color: #fff;
 }
+#myframe{
+  width:100%;
+  min-height:300px;
+}
 .el-input-group{
   width:40%;
 }
@@ -117,7 +121,28 @@ var QRCode = require('qrcode')
         tableData: [],
         bookcode:'',
         booklink:'',
-        sharecode:''
+        filetype:"",
+        sharecode:'',
+        link:'',
+        options: [{
+          value: '',
+          label: '智能'
+        }, {
+          value: 'brand',
+          label: '品牌'
+        }, {
+          value: 'product',
+          label: '产品'
+        }, {
+          value: 'title',
+          label: '手册'
+        }, {
+          value: 'ID',
+          label: '手册号'
+        },{
+          value: 'timestamp',
+          label: '上线时间'
+        }],
       }
     },
     mounted(){
@@ -141,12 +166,44 @@ var QRCode = require('qrcode')
         this.centerDialogVisible = true;
         this.popwidth = "60%";
         this.DialogTitle = "预览";
-        this.html = 'huahua';
+        if(row.html!==""&&row.link==""){
+          this.html = row.html;
+          this.filetype = "html"
+        }else if(row.link!==""){
+          this.link = row.link;
+          this.filetype = "url";
+          this.html = "i";
+        }else if(row.file!==""){
+
+        }
+      
+      },
+      selectevt(val){
+        this.select = val;
+        api.searchFile({str:this.input5,type:val}).then(res => {
+          if(res.data.result == "success"){
+            this.tableData = res.data.value;
+          } else {
+            this.$ssm(res.data.value)
+          }
+        })
       },
       add(row){
         this.addapi(row)
       },
+      search(){
+        console.log(this.select)
+        api.searchFile({str:this.input5,type:this.select}).then(res => {
+          if(res.data.result == "success"){
+            this.tableData = res.data.value;
+          } else {
+            this.$ssm(res.data.value)
+          }
+        })
+      },
       addapi(row){
+        row.username = Cookies.get('username');
+        console.log(row)
         api.addmycollect(row).then(res => {
           if(res.data.result == "success"){
             this.$message({
@@ -161,6 +218,7 @@ var QRCode = require('qrcode')
       share(row){
         this.centerDialogVisible = true;
         this.html = "";
+        this.filetype = "";
         this.popwidth = "30%";
         this.bookcode = row.ID;
         this.booklink = row.link;

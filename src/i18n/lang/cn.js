@@ -197,6 +197,10 @@ export const message = {
     'error_no_30': '同一台设备不能重复添加相同的参数!',
     'error_no_31': "设备号与验证码不匹配！",
     'error_no_32': "此设备已经添加",
+    'error_no_34': '已经添加过',
+    'error_no_35': '该手册已经下线',
+    'error_no_36':'分享码错误',
+    'error_no_37': '上传失败，请重新上传',
     
     //unit  单位
     s:'秒',
@@ -284,5 +288,6 @@ export const message = {
     Manual:'手册号',
     manual:'手册名称',
     Creationtime:'创建时间',
-    status:'最近状态'
+    status:'最近状态',
+    publishtype:'发布方式',
 }

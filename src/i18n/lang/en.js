@@ -197,6 +197,10 @@ export const message ={
     'error_no_30': 'The same device cannot add the same parameter repeatedly!',
     'error_no_31': "Device number and verification code do not match!",
     'error_no_32': "This device has been added",
+    'error_no_34': "Operation failed, added",
+    'error_no_35': 'The manual has been offline',
+    'error_no_36': 'Sharing code error',
+    'error_no_37': 'Upload failed, please reupload',
 
     //18/4/12
     phone : 'phone' ,

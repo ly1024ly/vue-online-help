@@ -25,13 +25,14 @@
           font-size:14px;
           cursor:pointer;
           list-style-type:none;
-          
+          margin:5px 0;
           .row{
             width:70%;
             display:inline-block;
             &:hover{
               color:#409EFF;
             }
+            
           }
           .el-button.el-button--primary{
             padding:3px 5px;
@@ -42,6 +43,14 @@
           i{
             font-size:20px;
             margin:0 4px;
+          }
+        }
+        .notouch{
+          background-color:#eee;
+          pointer-events: none;
+          .delete{
+            z-index:100;
+            pointer-events: auto;
           }
         }
       }

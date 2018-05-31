@@ -6,13 +6,35 @@
         :visible.sync="DialogVisible"
         width="30%"
         center>
-        <div>
+        <div v-show="sharemy">
           <p>您可以用以下信息的任意一种向他人分享资料：</p><div>手册号：{{mybookcode}}</div><div>分享码：{{mycode}}</div><div>分享链接：{{mybooklink}}</div><div>分享链接二维码：</div><p class="qrcode" style="text-align:center"><canvas id="canvas" ref="canvas"></canvas></p>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="DialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="DialogVisible = false">确 定</el-button>
+          </div>
         </div>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="DialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="DialogVisible = false">确 定</el-button>
-        </span>
+        <div v-show="check">
+            <p>请输入手册号或分享码（保密资料只能通过分享码添加）</p>
+            <select class="type" @change="checkway">
+              <option value="code">分享码</option>
+              <option value="phone">手机号</option>
+            </select>
+            <input type="text" v-model="sharecode" style="height:23px"/>
+            <button type="warning" @click='this.checksharecode'>检测</button>
+            <p class="description">
+              <div>{{this.$t('message.popmessage')}}</div>
+              <ul>
+                <li>厂商：{{obj.manufacturer}}</li>
+                <li>品牌：{{obj.brand}}</li>
+                <li>型号：</li>
+
+              </ul>
+            </p>
+            <div slot="footer" class="dialog-footer">
+              <el-button >取 消</el-button>
+              <el-button type="primary" @click="add">确 定</el-button>
+            </div>
+          </div>
       </el-dialog>
       <el-button type="primary" @click="open5">{{this.$t('message.addfile')}}</el-button>
       <router-link to="/files"><el-button type="primary">{{this.$t('message.browse')}}</el-button></router-link>
@@ -21,15 +43,15 @@
       <div class="tree">
         <div><i class="el-icon-document" />&nbsp;全部资料</div>
         <ul>
-          <li v-for="(item,index) in books" keys="index" @click="openpage(item.link)" >
-            <a class="attr" :title="item.secrecy_type">
-            <div class="row"><i class="el-icon-document" />&nbsp;{{item.title}}</div><el-button type="primary" icon="el-icon-delete" @click="del(item)"></el-button><el-button type="primary" icon="el-icon-share" @click="share(item)"></el-button>
+          <li v-for="(item,index) in books" keys="index" @click="openpage(item.html)" :class="item.status=='上线' ? '': 'notouch'" >
+            <a class="attr" :title="item.secrecy_type" >
+            <div class="row"><i class="el-icon-document" />&nbsp;{{item.title.slice(0,9)}}</div><el-button type="primary" icon="el-icon-delete" @click="del(item)" class="delete"></el-button><el-button type="primary" icon="el-icon-share" @click="share(item)"></el-button>
             </a>
           </li>
         </ul>
       </div>
-      <div class="detail" ref="detail" :style="{width:width}">
-        <iframe :src="openurl" class="framecontent"></iframe>
+      <div class="detail" ref="detail" :style="{width:width}" v-html="content">
+        
       </div>
 
     </div>
@@ -60,7 +82,9 @@
       text-align:center;
     }
   }
-
+  .dialog-footer{
+    text-align:center;
+  }
 </style>
 
 <script type="text/javascript">
@@ -76,7 +100,13 @@ var QRCode = require('qrcode')
         openurl:'',
         mybookcode:'',
         mybooklink:'',
-        mycode:''
+        mycode:'',
+        sharecode:'',
+        content:"",
+        sharemy:false,
+        check:false,
+        checktype:'code',
+        obj:{}
       }
       
     },
@@ -94,16 +124,41 @@ var QRCode = require('qrcode')
       })
       window.onresize = () => this.resize()
     },
+    computed:{
+      li_style(val){
+        console.log(val)
+        return {}
+      }
+    },
     methods:{
       resize(){
         this.width = document.body.clientWidth * (920/1680) + "px"
         console.log(document.body.clientWidth)
+      },
+      checkway(val){
+        this.checktype = val
+      },
+      add(){
+        api.addmycollect(this.obj).then(res => {
+          if(res.data.result == "success"){
+            this.$message({
+              message: '添加成功',
+              type: 'success'
+            });
+            this.books.push(this.obj)
+            this.DialogVisible = false;
+          } else {
+            this.$ssm(res.data)
+          }
+        })
       },
       share(par){
         this.DialogVisible = true;
         this.mybookcode = par.ID;
         this.mybooklink = par.link;
         this.mycode = par.sharecode;
+        this.sharemy = true;
+        this.check = false;
         setTimeout(function(){
           if(par.link){
           var canvas = document.getElementById("canvas");
@@ -129,43 +184,24 @@ var QRCode = require('qrcode')
       },
       openpage(res){
         console.log(res)
-        this.openurl = res;
+        this.content = res;
+      },
+      checksharecode(){
+        console.log(this.sharecode)
+        if(this.checktype == "code"){
+          api.checksharecode({sharecode:this.sharecode}).then(res => {
+            if(res.data.result == "success"){
+              this.obj = res.data.value
+            } else {
+              this.$ssm(res.data)
+            }
+          })
+        }
       },
       open5() {
-        let html = `
-          <div>
-            <p>请输入手册号或分享码（保密资料只能通过分享码添加）</p>
-            <select class="type">
-              <option>分享码</option>
-              <option>手机号</option>
-            </select>
-            <input type="text" value="dsfdsfsdf"/>
-            <button type="warning">检测</button>
-            <p class="description">
-              <div>${this.$t('message.popmessage')}</div>
-              <ul>
-                <li>厂商：</li>
-                <li>品牌：</li>
-                <li>型号：</li>
-
-              </ul>
-            </p>
-          </div>`
-        this.$alert(html, '添加资料', {
-          dangerouslyUseHTMLString: true,
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
+        this.DialogVisible = true;
+        this.sharemy = false;
+        this.check = true;
       }
       
       
